@@ -15,9 +15,7 @@ form.addEventListener("input", onFormInput);
 form.addEventListener("submit", onFormSubmit);
 
 function onFormInput(event) {
-  
   formData[event.target.name] = event.target.value.trim();
-
   localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 }
 
@@ -27,14 +25,13 @@ function initForm() {
   if (savedState) {
     try {
       const parsedData = JSON.parse(savedState);
-
       formData.email = parsedData.email || "";
       formData.message = parsedData.message || "";
 
       emailInput.value = formData.email;
       messageInput.value = formData.message;
     } catch (error) {
-      console.error("Failed to parse local storage state:", error);
+      console.error("Storage parse error", error);
     }
   }
 }
@@ -47,9 +44,8 @@ function onFormSubmit(event) {
     return;
   }
 
-  console.log("Submitted form data:", formData);
+  console.log("Submitted data:", formData);
 
-  
   localStorage.removeItem(STORAGE_KEY);
   formData.email = "";
   formData.message = "";
